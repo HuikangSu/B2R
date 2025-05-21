@@ -1,0 +1,345 @@
+#  SafetyGymnasium
+CarButton1:
+  target_rtg:
+    20: 5
+    40: 3
+    80: 5
+  env_type: gymnasium
+  env_id: OfflineCarButton1Gymnasium-v0
+  cost_scale: 300
+  reward_scale: 50
+CarButton2:
+  target_rtg:
+    20: 3
+    40: 1
+    80: 7
+  env_type: gymnasium
+  env_id: OfflineCarButton2Gymnasium-v0
+  cost_scale: 300
+  reward_scale: 50
+CarPush1:
+  target_rtg:
+    20: 9
+    40: 10
+    80: 10
+  env_type: gymnasium
+  env_id: OfflineCarPush1Gymnasium-v0
+  cost_scale: 300
+  reward_scale: 50
+CarPush2:
+  target_rtg:
+    20: 5
+    40: 5
+    80: 7
+  env_type: gymnasium
+  env_id: OfflineCarPush2Gymnasium-v0
+  cost_scale: 300
+  reward_scale: 50
+CarGoal1:
+  target_rtg:
+    20: 30
+    40: 30
+    80: 45
+  env_type: gymnasium
+  env_id: OfflineCarGoal1Gymnasium-v0
+  cost_scale: 100
+  reward_scale: 50
+CarGoal2:
+  target_rtg:
+    20: 5
+    40: 10
+    80: 20
+  env_type: gymnasium
+  env_id: OfflineCarGoal2Gymnasium-v0
+  cost_scale: 300
+  reward_scale: 50
+PointButton1:
+  target_rtg:
+    20: 7
+    40: 15
+    80: 25
+  env_type: gymnasium
+  env_id: OfflinePointButton1Gymnasium-v0
+  cost_scale: 200
+  reward_scale: 50
+PointButton2:
+  target_rtg:
+    20: 3
+    40: 5
+    80: 20
+  env_type: gymnasium
+  env_id: OfflinePointButton2Gymnasium-v0
+  cost_scale: 200
+  reward_scale: 50
+PointCircle1:
+  target_rtg:
+    20: 55
+    40: 50
+    80: 50
+  env_type: gymnasium
+  env_id: OfflinePointCircle1Gymnasium-v0
+  cost_scale: 200
+  reward_scale: 50
+PointCircle2:
+  target_rtg:
+    20: 45
+    40: 55
+    80: 50
+  env_type: gymnasium
+  env_id: OfflinePointCircle2Gymnasium-v0
+  cost_scale: 200
+  reward_scale: 50
+PointGoal1:
+  target_rtg:
+    20: 20
+    40: 35
+    80: 35
+  env_type: gymnasium
+  env_id: OfflinePointGoal1Gymnasium-v0
+  cost_scale: 100
+  reward_scale: 50
+PointGoal2:
+  target_rtg:
+    20: 7
+    40: 15
+    80: 20
+  env_type: gymnasium
+  env_id: OfflinePointGoal2Gymnasium-v0
+  cost_scale: 200
+  reward_scale: 50
+PointPush1:
+  target_rtg:
+    20: 10
+    40: 12
+    80: 20
+  env_type: gymnasium
+  env_id: OfflinePointPush1Gymnasium-v0
+  cost_scale: 100
+  reward_scale: 50
+PointPush2:
+  target_rtg:
+    20: 5
+    40: 5
+    80: 10
+  env_type: gymnasium
+  env_id: OfflinePointPush2Gymnasium-v0
+  cost_scale: 200
+  reward_scale: 50
+CarCircle1:
+  target_rtg:
+    20: 7
+    40: 10
+    80: 20
+  env_type: gymnasium
+  env_id: OfflineCarCircle1Gymnasium-v0
+  cost_scale: 300
+  reward_scale: 500
+CarCircle2:
+  target_rtg:
+    20: 7
+    40: 7
+    80: 20
+  env_type: gymnasium
+  env_id: OfflineCarCircle2Gymnasium-v0
+  cost_scale: 300
+  reward_scale: 500
+AntVelocity:
+  target_rtg:
+    20: 2800
+    40: 2800
+    80: 2800
+  env_type: gymnasium
+  env_id: OfflineAntVelocityGymnasium-v1
+  cost_scale: 300
+  reward_scale: 3000
+HalfCheetahVelocity:
+  target_rtg:
+    20: 3000
+    40: 3000
+    80: 2500
+  env_type: gymnasium
+  env_id: OfflineHalfCheetahVelocityGymnasium-v1
+  cost_scale: 300
+  reward_scale: 3000
+SwimmerVelocity:
+  target_rtg:
+    20: 140
+    40: 100
+    80: 90
+  env_type: gymnasium
+  env_id: OfflineSwimmerVelocityGymnasium-v1
+  cost_scale: 300
+  reward_scale: 3000
+HopperVelocity:
+  target_rtg:
+    20: 1350
+    40: 1400
+    80: 1000
+  env_type: gymnasium
+  env_id: OfflineHopperVelocityGymnasium-v1
+  cost_scale: 300
+  reward_scale: 1000
+Walker2dVelocity:
+  target_rtg:
+    20: 3000
+    40: 2500
+    80: 2800
+  env_type: gymnasium
+  env_id: OfflineWalker2dVelocityGymnasium-v1
+  cost_scale: 300
+  reward_scale: 3000
+# BulletSafetyGym
+AntRun:
+  target_rtg:
+    10: 635
+    20: 620
+    40: 710
+  env_type: gymnasium
+  env_id: OfflineAntRun-v0
+  cost_scale: 100
+  reward_scale: 1000
+AntCircle:
+  target_rtg:
+    10: 300
+    20: 300
+    40: 300
+  env_type: gymnasium
+  env_id: OfflineAntCircle-v0
+  cost_scale: 300
+  reward_scale: 500
+BallRun:
+  target_rtg:
+    10: 445
+    20: 455
+    40: 455
+  env_type: gymnasium
+  env_id: OfflineBallRun-v0
+  cost_scale: 100
+  reward_scale: 1000
+BallCircle:
+  target_rtg:
+    10: 700
+    20: 700
+    40: 700
+  env_type: gymnasium
+  env_id: OfflineBallCircle-v0
+  cost_scale: 100
+  reward_scale: 1000
+CarRun:
+  target_rtg:
+    10: 560
+    20: 545
+    40: 545
+  env_type: gymnasium
+  env_id: OfflineCarRun-v0
+  cost_scale: 50
+  reward_scale: 500
+CarCircle:
+  target_rtg:
+    10: 450
+    20: 445
+    40: 445
+  env_type: gymnasium
+  env_id: OfflineCarCircle-v0
+  cost_scale: 100
+  reward_scale: 500
+DroneRun:
+  target_rtg:
+    10: 425
+    20: 400
+    40: 400
+  env_type: gymnasium
+  env_id: OfflineDroneRun-v0
+  cost_scale: 100
+  reward_scale: 1000
+DroneCircle:
+  target_rtg:
+    10: 400
+    20: 400
+    40: 400
+  env_type: gymnasium
+  env_id: OfflineDroneCircle-v0
+  cost_scale: 100
+  reward_scale: 1000
+# Metadrive
+easydense:
+  target_rtg:
+    10: 270
+    20: 360
+    40: 360
+  env_type: gym
+  env_id: OfflineMetadrive-easydense-v0
+  cost_scale: 50
+  reward_scale: 300
+mediumdense:
+  target_rtg:
+    10: 230
+    20: 310
+    40: 365
+  env_type: gym
+  env_id: OfflineMetadrive-mediumdense-v0
+  cost_scale: 50
+  reward_scale: 300
+harddense:
+  target_rtg:
+    10: 270
+    20: 350
+    40: 360
+  env_type: gym
+  env_id: OfflineMetadrive-harddense-v0
+  cost_scale: 50
+  reward_scale: 300
+easysparse:
+  target_rtg:
+    10: 270
+    20: 360
+    40: 360
+  env_type: gym
+  env_id: OfflineMetadrive-easysparse-v0
+  cost_scale: 50
+  reward_scale: 300
+mediumsparse:
+  target_rtg:
+    10: 230
+    20: 365
+    40: 365
+  env_type: gym
+  env_id: OfflineMetadrive-mediumsparse-v0
+  cost_scale: 50
+  reward_scale: 300
+hardsparse:
+  target_rtg:
+    10: 270
+    20: 350
+    40: 360
+  env_type: gym
+  env_id: OfflineMetadrive-hardsparse-v0
+  cost_scale: 50
+  reward_scale: 300
+easymean:
+  target_rtg:
+    10: 270
+    20: 360
+    40: 360
+  env_type: gym
+  env_id: OfflineMetadrive-easymean-v0
+  cost_scale: 50
+  reward_scale: 300
+mediummean:
+  target_rtg:
+    10: 215
+    20: 355
+    40: 365
+  env_type: gym
+  env_id: OfflineMetadrive-mediummean-v0
+  cost_scale: 50
+  reward_scale: 300
+hardmean:
+  target_rtg:
+    10: 250
+    20: 350
+    40: 360
+  env_type: gym
+  env_id: OfflineMetadrive-hardmean-v0
+  cost_scale: 50
+  reward_scale: 300
