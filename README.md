@@ -18,7 +18,7 @@ How B2R works in practice:
    C′t = Ct + (κ − C(τ)).
 3) Temporal encoding with RoPE: rotary positional embeddings capture relative, step-by-step dynamics better than absolute positions.
 
-![Figure 1](./img/img_1.jpg)
+![Figure 1](./figure_1_score0.97.jpg)
 
 Why it works (intuition):
 - The model is always conditioned on a fixed boundary token (CTG = κ). RTG stays a user-controlled target.
