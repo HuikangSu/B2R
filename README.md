@@ -1,28 +1,23 @@
-# Boundary-to-Region Supervision for Offline Safe Reinforcement Learning (NIPS2025)
+# Boundary-to-Region Supervision for Offline Safe Reinforcement Learning (NeurIPS 2025)
 
-This repository provides the official implementation of **B2R**. It is evaluated on the [DSRL benchmark](https://github.com/decisionintelligence/DSRL) across SafetyGymnasium, BulletSafetyGym, and MetaDrive environments.
+This is the official implementation of **B2R**, a new method for offline safe RL that fixes a core "symmetry fallacy" in Decision Transformer-style models. B2R is evaluated on the [DSRL benchmark](https://github.com/decisionintelligence/DSRL).
 
-Problem → Existing sequence models (Decision Transformer–style) treat return-to-go (RTG) and cost-to-go (CTG) symmetrically. But in constrained MDPs, RTG is a flexible target; CTG is a non-negotiable safety budget. This “symmetry fallacy” causes:
-- Brittle deployment: picking a feasible RTG/CTG pair is guesswork.
-- Sparse training signal: few trajectories sit near the safety boundary, so supervision is thin and unreliable.
-
-Insight → Safety is a boundary, not a knob. If the model always sees the same boundary token (the deployment budget), it can learn all the diverse safe behaviors inside that region, not just rare near-threshold cases.
-
-Solution (B2R): Boundary-to-Region supervision that makes conditioning asymmetric by realigning CTG to the budget. Three steps: filter, realign, encode. The result is dense, region-wide safety supervision without changing the Transformer objective or architecture.
+**The Idea:** Stop treating safety and reward symmetrically. Safety is a hard **boundary**, while reward is a flexible **target**. B2R implements this insight via **Boundary-to-Region** supervision, which realigns all cost-to-go signals to the true safety budget. This provides **dense, region-wide supervision** without changing the model's architecture.
 
 ![Figure 0](./figure_1_score0.97.jpg)
 
-Hard data across 38 tasks (Safety Gymnasium, Bullet Safety-Gym, MetaDrive; 3 cost limits × 3 seeds):
-- B2R satisfies safety in 35/38 and ranks first on average.
-- Highest rewards in 20 tasks.
-- Consistently lower cost than Constrained Decision Transformer (CDT) while matching or beating reward. Tightening CDT’s boundary token isn’t enough—what matters is region-wide supervision.
+### Highlights
 
-Robustness and flexibility:
-- Safe data scarcity (5–50% of safe trajectories): B2R degrades gracefully; often retains safety at 20% due to dense supervision.
-- Multi-target extension: one model supports multiple κ values via per-κ realignment and conditioning—comparable to single-target models.
+-   **Fixes a Core Flaw**: Solves the brittle deployment and sparse signal problems caused by the "symmetry fallacy."
+-   **Zero Architectural Change**: Drastically improves safety without modifying the Transformer model or its objective function.
+-   **SOTA Safety & Performance**:
+    -   Satisfies safety in **35/38** tasks.
+    -   Achieves the highest reward in **20/38** tasks.
+    -   Consistently safer than CDT while delivering competitive rewards.
+-   **Robust**: Degrades gracefully under safe data scarcity (down to 5-20%).
+-   **Flexible**: A single model can be conditioned on multiple safety budgets at test time.
 
-Takeaway: Stop treating safety like reward. Align cost signals to the actual budget and supervise across the whole safe region. B2R keeps DT’s simplicity, adds safety guarantees, and improves the safety–performance frontier—no architectural surgery required.
-
+**In short:** B2R adds robust safety guarantees to the simple and powerful Decision Transformer framework by fundamentally changing how cost signals are supervised.
 ## 🚀 Quick Start
 
 ### Installation
