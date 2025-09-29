@@ -15,7 +15,7 @@ This is the official implementation of **B2R**, a new method for offline safe RL
     -   Achieves the highest reward in **20/38** tasks.
     -   Consistently safer than CDT while delivering competitive rewards.
 -   **Robust**: Degrades gracefully under safe data scarcity (down to 5-20%).
--   **Flexible**: A single model can be conditioned on multiple safety budgets at test time.
+-   **Flexible**: A single model can be trained on multiple safety budgets simultaneously, enabling it to satisfy different constraints at deployment.
 
 **In short:** B2R adds robust safety guarantees to the simple and powerful Decision Transformer framework by fundamentally changing how cost signals are supervised.
 ## 🚀 Quick Start
