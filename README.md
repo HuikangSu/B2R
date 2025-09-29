@@ -12,19 +12,6 @@ Solution (B2R): Boundary-to-Region supervision that makes conditioning asymmetri
 
 ![Figure 0](./figure_1_score0.97.jpg)
 
-How B2R works in practice:
-1) Trajectory filtering: drop unsafe trajectories whose total cost exceeds the deployment budget κ.
-2) CTG realignment: shift each safe trajectory’s cost-to-go so CTG starts at κ while preserving its strictly decreasing temporal profile:
-   C′t = Ct + (κ − C(τ)).
-3) Temporal encoding with RoPE: rotary positional embeddings capture relative, step-by-step dynamics better than absolute positions.
-
-![Figure 1](./figure_5_score0.95.jpg)
-
-Why it works (intuition):
-- The model is always conditioned on a fixed boundary token (CTG = κ). RTG stays a user-controlled target.
-- Training sees the same boundary across many safe behaviors → supervision becomes dense and consistent.
-- At inference, RTG and CTG update by subtracting observed rewards/costs each step, anchoring safety while tuning ambition.
-
 Hard data across 38 tasks (Safety Gymnasium, Bullet Safety-Gym, MetaDrive; 3 cost limits × 3 seeds):
 - B2R satisfies safety in 35/38 and ranks first on average.
 - Highest rewards in 20 tasks.
