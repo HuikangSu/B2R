@@ -1,4 +1,6 @@
-# 🌟B2R: Boundary-to-Region Supervision for Offline Safe Reinforcement Learning (NIPS2025 Poster)
+<p align="center">
+<h1 align="center"> <img src="image/unicorn.svg" alt="SVG Image"> M<sup>3</sup>CoT: A Novel Benchmark for Multi-Domain Multi-step Multi-modal Chain-of-Thought</h1>
+</p>
 
 This repository provides the official implementation of **B2R**. It is evaluated on the [DSRL benchmark](https://github.com/decisionintelligence/DSRL) across SafetyGymnasium, BulletSafetyGym, and MetaDrive environments.
 
