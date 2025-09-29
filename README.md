@@ -10,7 +10,7 @@ Insight → Safety is a boundary, not a knob. If the model always sees the same 
 
 Solution (B2R): Boundary-to-Region supervision that makes conditioning asymmetric by realigning CTG to the budget. Three steps: filter, realign, encode. The result is dense, region-wide safety supervision without changing the Transformer objective or architecture.
 
-![Figure 0](./img/img_0.jpg)
+![Figure 0](./figure_1_score0.97.jpg)
 
 How B2R works in practice:
 1) Trajectory filtering: drop unsafe trajectories whose total cost exceeds the deployment budget κ.
@@ -18,7 +18,7 @@ How B2R works in practice:
    C′t = Ct + (κ − C(τ)).
 3) Temporal encoding with RoPE: rotary positional embeddings capture relative, step-by-step dynamics better than absolute positions.
 
-![Figure 1](./figure_1_score0.97.jpg)
+![Figure 1](./figure_5_score0.95.jpg)
 
 Why it works (intuition):
 - The model is always conditioned on a fixed boundary token (CTG = κ). RTG stays a user-controlled target.
@@ -36,28 +36,11 @@ Hard data across 38 tasks (Safety Gymnasium, Bullet Safety-Gym, MetaDrive; 3 cos
 - Highest rewards in 20 tasks.
 - Consistently lower cost than Constrained Decision Transformer (CDT) while matching or beating reward. Tightening CDT’s boundary token isn’t enough—what matters is region-wide supervision.
 
-![Figure 2](./img/img_2.jpg)
+Robustness and flexibility:
+- Safe data scarcity (5–50% of safe trajectories): B2R degrades gracefully; often retains safety at 20% due to dense supervision.
+- Multi-target extension: one model supports multiple κ values via per-κ realignment and conditioning—comparable to single-target models.
 
-Beyond CDT: B2R outperforms or matches BC-Safe and TraC. These filter unsafe data but still suffer sparse/coarse supervision. Realigning CTG turns safe data into dense, fine-grained cost guidance that captures causal cost dynamics.
-
-Stringent limits? Against FISOR under very low budgets, B2R is both safe and the top performer in return across diverse tasks—making fuller use of the allowed budget without crossing it.
-
-![Figure 3](./img/img_3.jpg)
-
-Qualitative behavior:
-- Action space t-SNE shows B2R clusters on a “safe manifold,” with far fewer unsafe choices, indicating better cost-aware generalization.
-
-![Figure 4](./img/img_4.jpg)
-
-- In MetaDrive, B2R yields smooth, stable control that stays within limits; boundary-trained policies “ride the edge” and oscillate into violations.
-
-![Figure 5](./img/img_5.jpg)
-
-Ablations that isolate the safety lever:
-- Remove CTG realignment → more violations, similar returns.
-- Replace RoPE with absolute positions → both reward and safety drop.
-- Skip filtering → lower safety and instability; any reward gains come from imitating unsafe behavior.
-- Realignment strategies: Shift (best balance), Avg (oversmooths), Scale (more reward, more violations), Rand (surprisingly robust).
+Takeaway: Stop treating safety like reward. Align cost signals to the actual budget and supervise across the whole safe region. B2R keeps DT’s simplicity, adds safety guarantees, and improves the safety–performance frontier—no architectural surgery required.
 
 ## 🚀 Quick Start
 
