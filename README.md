@@ -25,12 +25,6 @@ Why it works (intuition):
 - Training sees the same boundary across many safe behaviors → supervision becomes dense and consistent.
 - At inference, RTG and CTG update by subtracting observed rewards/costs each step, anchoring safety while tuning ambition.
 
-Grounding in theory:
-- With aligned data and bounded per-step cost error σ, if σH < δ (H = horizon, δ = safety margin), B2R achieves:
-  • High-probability safety: violation probability shrinks exponentially in (δ − σH)^2 / (2H C_max^2).
-  • Expected safety: E[cumulative cost] ≤ κ − (δ − σH).
-- With “optimal coverage” in the filtered data, region-wide supervision contains boundary-only supervision, so reward is no worse while constraints are satisfied.
-
 Hard data across 38 tasks (Safety Gymnasium, Bullet Safety-Gym, MetaDrive; 3 cost limits × 3 seeds):
 - B2R satisfies safety in 35/38 and ranks first on average.
 - Highest rewards in 20 tasks.
