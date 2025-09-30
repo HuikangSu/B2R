@@ -24,8 +24,8 @@ This is the official implementation of **B2R**, a new method for offline safe RL
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/B2R-ULTRA.git
-cd B2R-ULTRA
+git clone https://github.com/Huikangsu/B2R.git
+cd B2R
 
 # Install the package
 pip install -e .
