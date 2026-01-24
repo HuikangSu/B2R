@@ -18,7 +18,6 @@ from utils.save import save_model
 from utils.logger import setup_logger
 import dsrl
 
-# 设置日志记录器
 logger = setup_logger("B2R", save_dir="logs")
 
 def load_config() -> Dict:
@@ -379,7 +378,7 @@ def parse_args() -> argparse.Namespace:
                       help="Number of evaluation episodes")
     parser.add_argument("--max_eval_ep_len", type=int, default=1000,
                       help="Maximum evaluation episode length")
-    parser.add_argument("--dataset_dir", type=str, default="/home/l/B2R/data/dsrl_dataset",
+    parser.add_argument("--dataset_dir", type=str, default="/home/XXX/B2R/data/dsrl_dataset",
                       help="Dataset directory")
     
     # Other parameters

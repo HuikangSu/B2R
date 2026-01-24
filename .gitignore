@@ -1,13 +1,12 @@
-# --- 系统垃圾 ---
+
 __pycache__/
 *.py[cod]
 .DS_Store
 b2r.egg-info/
 
-# --- VS Code 配置 (不想同步个人设置就加上) ---
 .vscode/
 
-# --- 数据集 (千万别传) ---
+
 dataset/
 datasets/
 *.csv
@@ -15,14 +14,14 @@ datasets/
 *.tar.gz
 data/dsrl_dataset
 
-# --- 日志和输出 ---
+
 logs/
 log/
 *.log
 wandb/
 runs/
 
-# --- 模型权重 (大文件) ---
+
 checkpoints/
 *.pth
 *.pt
@@ -33,7 +32,7 @@ model_saved/
 weights/
 wandb/
 
-# --- 虚拟环境 ---
+
 env/
 venv/
 .conda/

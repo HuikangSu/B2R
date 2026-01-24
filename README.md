@@ -31,6 +31,17 @@ cd B2R
 pip install -e .
 ```
 
+
+### Data Preparation
+Before training, you must download and process the DSRL datasets. We provide a one-click script that automatically downloads the HDF5 datasets from HuggingFace and converts them into the required pickle format.
+
+```
+This script will:
+1. Download missing .hdf5 files to data/hdf5_dataset/
+2. Process and save .pkl files to data/dsrl_dataset/
+python make_dsrl_data.py
+```
+
 ### Training
 
 ```bash
