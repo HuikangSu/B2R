@@ -33,8 +33,8 @@ def make_dsrl_data():
     Reads environment configurations from config.yaml and processes data for each environment.
     """
     # Set data directories
-    hdf5_data_dir = "/home/wsj"
-    data_dir = "/home/wsj/DT_WITH_CR_MAIN/data/dsrl_dataset"
+    hdf5_data_dir = "/home/l/SafeMetaDriveDatasets"
+    data_dir = "/home/l/B2R/data/dsrl_dataset"
     # hdf5_data_dir = "data/hdf5_dataset"  # Directory containing HDF5 files
     # data_dir = "data/dsrl_dataset"       # Directory for output pickle files
     if not os.path.exists(data_dir):
@@ -48,7 +48,7 @@ def make_dsrl_data():
     print(f"Output directory: {data_dir}")
 
     # Read all environments from config.yaml
-    with open("utils/config.yaml", "r", encoding="utf-8") as f:
+    with open("utils/B2R_config.yaml", "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
     
     env_data_names = list(config.keys())
@@ -57,7 +57,7 @@ def make_dsrl_data():
         file_name = f"{env_data_name}.hdf5"
         env_name = f"{env_data_name}"
         
-        pkl_file_path = os.path.join(data_dir, env_name + "safe")
+        pkl_file_path = os.path.join(data_dir, env_name)
         hdf5_file_path = os.path.join(hdf5_data_dir, file_name)
         
         if not os.path.exists(hdf5_file_path):

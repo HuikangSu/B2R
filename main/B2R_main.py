@@ -15,11 +15,11 @@ from data.dsrl_trajectory_dataset import DSRLTrajectoryDataset
 from trainer.B2R_trainer import B2RTrainer
 from eval.B2R_eval import B2REvaluator
 from utils.save import save_model
-from main.logger import setup_logger
+from utils.logger import setup_logger
 import dsrl
 
 # 设置日志记录器
-logger = setup_logger("B2R")
+logger = setup_logger("B2R", save_dir="logs")
 
 def load_config() -> Dict:
     """
@@ -62,7 +62,7 @@ def setup_environment(env_name: str, cost_limit: float) -> Any:
     Returns:
         Any: Environment instance
     """
-    config = load_config()
+    config = load_config()  # 这里加载了一次配置
     env_type = config[env_name]["env_type"]
     dsrl_env = config[env_name]["env_id"]
     
@@ -73,7 +73,9 @@ def setup_environment(env_name: str, cost_limit: float) -> Any:
 
     env = gym.make(dsrl_env)
     env.set_target_cost(cost_limit)
-    return env
+
+    return env, config
+
 
 def setup_dataset(
     env_name: str,
@@ -214,14 +216,14 @@ def experiment(variant: Dict) -> None:
     
     # Setup environment
     logger.info("Setting up environment")
-    env = setup_environment(env_name, cost_limit)
+    env, config = setup_environment(env_name, cost_limit)
     state_dim = env.observation_space.shape[0]
     act_dim = env.action_space.shape[0]
     logger.info(f"Environment setup complete. State dim: {state_dim}, Action dim: {act_dim}")
     
     # Setup dataset
     logger.info("Setting up dataset")
-    dataset_path = os.path.join(variant["dataset_dir"], f"{env_name}.pkl")
+    dataset_path = os.path.join(variant["dataset_dir"], f"{env_name}safe.pkl")
     traj_dataset, traj_data_loader = setup_dataset(
         env_name, dataset_path, variant["context_len"], cost_limit, variant["device"], variant
     )
@@ -236,7 +238,11 @@ def experiment(variant: Dict) -> None:
     logger.info("Setting up evaluator")
     state_mean, state_std = traj_dataset.get_state_stats()
     reward_scale, cost_scale = traj_dataset.get_env_scale()
-    target_rtg = traj_dataset.get_return_stats()[0]  # max return
+    env_config = config.get(env_name, {})
+    target_rtg_dict = env_config.get("target_rtg", {})
+    target_rtg = target_rtg_dict[int(cost_limit)]
+    logger.info(f"Using Configured Target RTG: {target_rtg}")
+    logger.info(f"Using Configured Target CTG: {cost_limit}")
     evaluator = create_evaluator(
         env, state_mean, state_std, reward_scale, cost_scale, target_rtg, variant
     )
@@ -254,9 +260,24 @@ def experiment(variant: Dict) -> None:
         data_iter = iter(traj_data_loader)
         for update_idx in tqdm(range(variant["num_updates_per_iter"]), desc=f"Training iteration {iter_idx + 1}"):
             batch = get_next_batch(data_iter, traj_data_loader)
-            loss = trainer.train_iteration(batch)
-            
-            if update_idx % 100 == 0:
+            (
+                timesteps,
+                states,
+                next_states,
+                actions,
+                returns_to_go,
+                costs_to_go,
+                traj_mask,
+            ) = batch
+            loss = trainer.train_step(timesteps=timesteps,
+                    states=states,
+                    next_states=next_states,
+                    actions=actions,
+                    costs_to_go=costs_to_go,
+                    returns_to_go=returns_to_go,
+                    traj_mask=traj_mask)
+
+            if update_idx % 5000 == 0:
                 logger.info(f"Update {update_idx}/{variant['num_updates_per_iter']}, Loss: {loss:.4f}")
         
         # Evaluation
@@ -270,9 +291,20 @@ def experiment(variant: Dict) -> None:
         logger.info(f"Normalized DSRL Cost: {normalized_dsrl_cost:.4f}")
         
         # Save model
-        if (iter_idx + 1) % 10 == 0:
-            logger.info("Saving model checkpoint")
-            save_model(trainer.model, f"checkpoints/model_iter_{iter_idx + 1}.pt")
+        if (iter_idx + 1) == variant["max_train_iters"]:
+            logger.info("Saving FINAL model checkpoint")
+            checkpoint_dir = "checkpoints"
+            if not os.path.exists(checkpoint_dir):
+                os.makedirs(checkpoint_dir)
+            save_path = os.path.join(checkpoint_dir, f"final_model.pt")
+            torch.save({
+                    'iteration': iter_idx + 1,
+                    'model_state_dict': trainer.model.state_dict(),
+                    'optimizer_state_dict': trainer.optimizer.state_dict(),
+                    'score': normalized_dsrl_score,
+                    'cost': normalized_dsrl_cost,
+                    'config': variant 
+                }, save_path)
     
     # Print final results
     logger.info("Training completed. Final results:")
@@ -337,7 +369,7 @@ def parse_args() -> argparse.Namespace:
                       help="Initial temperature value")
     
     # Environment parameters
-    parser.add_argument("--env", type=str, default="CarCircle2",
+    parser.add_argument("--env", type=str, default="harddense",
                       help="Environment name")
     parser.add_argument("--cost_limit", type=float, default=20,
                       help="Cost limit")
@@ -347,7 +379,7 @@ def parse_args() -> argparse.Namespace:
                       help="Number of evaluation episodes")
     parser.add_argument("--max_eval_ep_len", type=int, default=1000,
                       help="Maximum evaluation episode length")
-    parser.add_argument("--dataset_dir", type=str, default="/home/wsj/DT_WITH_CR_MAIN/data/dsrl_dataset",
+    parser.add_argument("--dataset_dir", type=str, default="/home/l/B2R/data/dsrl_dataset",
                       help="Dataset directory")
     
     # Other parameters

@@ -120,15 +120,15 @@ class B2RTrainer:
         Returns:
             float: Training loss value
         """
+
         self.model.train()
-        
         # Move data to device
         timesteps = timesteps.to(self.device)
         states = states.to(self.device)
         next_states = next_states.to(self.device)
-        actions = actions.to(self.device)
-        costs_to_go = costs_to_go.to(self.device).unsqueeze(dim=-1)
-        returns_to_go = returns_to_go.to(self.device).unsqueeze(dim=-1)
+        actions = actions.float().to(self.device)
+        costs_to_go = costs_to_go.float().to(self.device).unsqueeze(dim=-1)
+        returns_to_go = returns_to_go.float().to(self.device).unsqueeze(dim=-1)
         traj_mask = traj_mask.to(self.device)
         
         # Forward pass

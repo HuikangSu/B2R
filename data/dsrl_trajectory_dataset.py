@@ -49,6 +49,8 @@ def load_and_process_trajectories_CTG_Shift(trajectories, cost_limit, cost_scale
         total_cost = np.sum(traj["costs"])
         delta = cost_limit - total_cost  # Δ = κ - C(τ)
         traj["costs_to_go"] = (traj["costs_to_go"] + delta) / cost_scale  # Ĉ't = Ĉt + Δ
+    print(f"原始轨迹总数: {len(trajectories)}")
+    print(f"过滤后轨迹总数: {len(filtered_trajectories)}")
     return filtered_trajectories
 
 def load_and_process_trajectories_CTG_Avg(trajectories, cost_limit, cost_scale, reward_scale=1.0):

@@ -164,18 +164,21 @@ class B2REvaluator:
                     
                     # Update costs-to-go and returns-to-go
                     if episode_cost < self.cost_limit:
-                        placeholders["costs_to_go"][0, t] = (self.cost_limit - episode_cost) / self.cost_scale
+                        cost_to_go = torch.tensor([(self.cost_limit - episode_cost) / self.cost_scale], device=self.device, dtype=torch.float32)
                     else:
-                        placeholders["costs_to_go"][0, t] = 0 / self.cost_scale
+                        cost_to_go = torch.tensor([0.0], device=self.device, dtype=torch.float32)
+
+                    placeholders["costs_to_go"][0, t] = cost_to_go
+
                     placeholders["returns_to_go"][0, t] = (self.target_rtg - episode_return) / self.reward_scale
                     
                     # Get action from model
                     action = self._get_action(t, placeholders)
-                    placeholders["actions"][0, t] = action
                     
                     # Environment step
                     state, reward, done, truncated, info = self.env.step(action.cpu().numpy())
                     
+                    placeholders["actions"][0, t] = action
                     # Update episode statistics
                     episode_return += reward
                     episode_length += 1
